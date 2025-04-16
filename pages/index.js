@@ -2,13 +2,12 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
-import 'tailwindcss/tailwind.css';
 import { motion } from 'framer-motion';
 
 export default function Home() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitStatus, setSubmitStatus] = useState(null);
-  const [modalImage, setModalImage] = useState(null);
+  const [modalImage, setModalImage] = state(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleChange = (e) => {
@@ -39,7 +38,6 @@ export default function Home() {
         <meta name="keywords" content="mole catching Wales, pest control farm, Welsh mole catcher, rural pest services, traditional mole traps" />
         <meta name="author" content="Welsh Mole Catcher" />
         <link rel="icon" href="/favicon.ico" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
       </Head>
 
       <nav className="bg-[#2f2a1d] text-[#f5e8c7] p-3 sm:p-4 sticky top-0 z-20 shadow-lg">
@@ -337,7 +335,7 @@ export default function Home() {
               <div className="faq-item mb-4">
                 <h3 className="text-xl sm:text-2xl font-heading text-[#3e2d20] mb-2">How do I get rid of moles on my farm in Wales?</h3>
                 <p className="text-base sm:text-lg text-[#4a3b30] font-body leading-relaxed">
-                  The most effective way to get rid of moles on your farm in Wales is through traditional mole trapping. At Welsh Mole Catcher, we use safe, time-tested traps to remove moles without harming your land or livestock. Contact us at <a href="tel:07375303124" className="text-[#3e2d20] hover:text-[#785f45] transition-colors duration-300">07375 303124</a> for expert service.
+                  The most effective way to get rid of moles on my farm in Wales is through traditional mole trapping. At Welsh Mole Catcher, we use safe, time-tested traps to remove moles without harming your land or livestock. Contact us at <a href="tel:07375303124" className="text-[#3e2d20] hover:text-[#785f45] transition-colors duration-300">07375 303124</a> for expert service.
                 </p>
               </div>
               <div className="faq-item mb-4">
