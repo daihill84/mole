@@ -7,7 +7,7 @@
   "build": "next build",
   "start": "next start",
   "export": "echo 'Export is now handled by next build with output: export in next.config.js'",
-  "deploy": "gh-pages -d out",
+  "deploy": "gh-pages -d out/mole",
   "postbuild": "mkdir out\\mole && move out\\*.* out\\mole && move out\\404 out\\mole && move out\\_next out\\mole"
 },
   "dependencies": {
