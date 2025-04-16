@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import 'tailwindcss/tailwind.css';
 import { motion } from 'framer-motion';
 
@@ -10,18 +10,6 @@ export default function Home() {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [modalImage, setModalImage] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const loadMotion = async () => {
-      try {
-        const mod = await import('framer-motion');
-        // No need to set motionLib since we're using motion directly
-      } catch (error) {
-        console.warn('Framer Motion failed to load. Animations disabled.', error);
-      }
-    };
-    loadMotion();
-  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -51,7 +39,6 @@ export default function Home() {
         <meta name="keywords" content="mole catching Wales, pest control farm, Welsh mole catcher, rural pest services, traditional mole traps" />
         <meta name="author" content="Welsh Mole Catcher" />
         <link rel="icon" href="/favicon.ico" />
-        {/* Remove this line if pages/_document.js is created */}
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
       </Head>
 
