@@ -3,11 +3,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import 'tailwindcss/tailwind.css';
-// Import motion directly (remove dynamic import to fix unused variable warning)
 import { motion } from 'framer-motion';
 
 export default function Home() {
-  const [motionLib, setMotionLib] = useState(null);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitStatus, setSubmitStatus] = useState(null);
   const [modalImage, setModalImage] = useState(null);
@@ -17,16 +15,13 @@ export default function Home() {
     const loadMotion = async () => {
       try {
         const mod = await import('framer-motion');
-        setMotionLib(mod);
+        // No need to set motionLib since we're using motion directly
       } catch (error) {
-        // Use error to suppress the unused variable warning
         console.warn('Framer Motion failed to load. Animations disabled.', error);
       }
     };
     loadMotion();
   }, []);
-
-  const MotionWrapper = motionLib ? motionLib.motion.div : 'div';
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -56,6 +51,7 @@ export default function Home() {
         <meta name="keywords" content="mole catching Wales, pest control farm, Welsh mole catcher, rural pest services, traditional mole traps" />
         <meta name="author" content="Welsh Mole Catcher" />
         <link rel="icon" href="/favicon.ico" />
+        {/* Remove this line if pages/_document.js is created */}
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
       </Head>
 
@@ -77,7 +73,7 @@ export default function Home() {
         </div>
       </nav>
 
-      <motion.div // Use motion directly instead of MotionWrapper
+      <motion.div
         className="relative h-screen text-[#f5e8c7] bg-cover bg-center bg-fixed hero-parallax"
         style={{ backgroundImage: "url('/moles_collage.jpg')" }}
         initial={{ opacity: 0 }}
