@@ -35,7 +35,6 @@ export default function Home() {
       <Head>
         <title>Welsh Mole Catcher - Expert Mole Control in Wales</title>
         <meta name="description" content="Professional mole catching services in Wales. Humane, effective, and affordable solutions for farms, gardens, and properties." />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {/* Header with Navigation */}
@@ -88,7 +87,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center">
             <div className="md:w-1/2 mb-6 md:mb-0">
               <Image
-                src="/farm_john_mole.jpg"
+                src="/mole/farm_john_mole.jpg"
                 alt="John the Mole Catcher on a Welsh farm"
                 width={500}
                 height={300}
@@ -120,7 +119,7 @@ export default function Home() {
             >
               <h3 className="text-xl font-semibold mb-4">Farm Mole Control</h3>
               <Image
-                src="/farm_moles.jpg"
+                src="/mole/farm_moles.jpg"
                 alt="Mole control on Welsh farms"
                 width={300}
                 height={200}
@@ -138,7 +137,7 @@ export default function Home() {
             >
               <h3 className="text-xl font-semibold mb-4">Garden Mole Removal</h3>
               <Image
-                src="/farm_son.jpg"
+                src="/mole/farm_son.jpg"
                 alt="Mole removal in Welsh gardens"
                 width={300}
                 height={200}
@@ -156,7 +155,7 @@ export default function Home() {
             >
               <h3 className="text-xl font-semibold mb-4">Commercial Mole Management</h3>
               <Image
-                src="/moles_collage.jpg"
+                src="/mole/moles_collage.jpg"
                 alt="Commercial mole management in Wales"
                 width={300}
                 height={200}
@@ -178,67 +177,67 @@ export default function Home() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             <div className="cursor-pointer">
               <Image
-                src="/moles_collage.jpg"
+                src="/mole/moles_collage.jpg"
                 alt="Moles caught on Welsh farms"
                 width={300}
                 height={200}
                 className="w-full object-cover rounded-lg shadow-md gallery-img border-2 border-[#d4c9a5]"
-                onClick={() => openModal('/moles_collage.jpg')}
+                onClick={() => openModal('/mole/moles_collage.jpg')}
                 onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=Mole+Catch+Highlights'; }}
               />
             </div>
             <div className="cursor-pointer">
               <Image
-                src="/farm_moles.jpg"
+                src="/mole/farm_moles.jpg"
                 alt="Moles on a Welsh farm"
                 width={300}
                 height={200}
                 className="w-full object-cover rounded-lg shadow-md gallery-img border-2 border-[#d4c9a5]"
-                onClick={() => openModal('/farm_moles.jpg')}
+                onClick={() => openModal('/mole/farm_moles.jpg')}
                 onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=Farm+Moles'; }}
               />
             </div>
             <div className="cursor-pointer">
               <Image
-                src="/farm_john_mole.jpg"
+                src="/mole/farm_john_mole.jpg"
                 alt="John catching moles"
                 width={300}
                 height={200}
                 className="w-full object-cover rounded-lg shadow-md gallery-img border-2 border-[#d4c9a5]"
-                onClick={() => openModal('/farm_john_mole.jpg')}
+                onClick={() => openModal('/mole/farm_john_mole.jpg')}
                 onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=John+Catching+Moles'; }}
               />
             </div>
             <div className="cursor-pointer">
               <Image
-                src="/moleintrap.jpg"
+                src="/mole/moleintrap.jpg"
                 alt="Mole in a trap"
                 width={300}
                 height={200}
                 className="w-full object-cover rounded-lg shadow-md gallery-img border-2 border-[#d4c9a5]"
-                onClick={() => openModal('/moleintrap.jpg')}
+                onClick={() => openModal('/mole/moleintrap.jpg')}
                 onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=Mole+in+Trap'; }}
               />
             </div>
             <div className="cursor-pointer">
               <Image
-                src="/rat1.jpg"
+                src="/mole/rat1.jpg"
                 alt="Rat control service"
                 width={300}
                 height={200}
                 className="w-full object-cover rounded-lg shadow-md gallery-img border-2 border-[#d4c9a5]"
-                onClick={() => openModal('/rat1.jpg')}
+                onClick={() => openModal('/mole/rat1.jpg')}
                 onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=Rat+Control'; }}
               />
             </div>
             <div className="cursor-pointer">
               <Image
-                src="/waspnest.jpg"
+                src="/mole/waspnest.jpg"
                 alt="Wasp nest removal"
                 width={300}
                 height={200}
                 className="w-full object-cover rounded-lg shadow-md gallery-img border-2 border-[#d4c9a5]"
-                onClick={() => openModal('/waspnest.jpg')}
+                onClick={() => openModal('/mole/waspnest.jpg')}
                 onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=Wasp+Nest+Removal'; }}
               />
             </div>
@@ -329,13 +328,13 @@ export default function Home() {
           <p>© {new Date().getFullYear()} Welsh Mole Catcher. All rights reserved.</p>
           <div className="mt-4 flex justify-center space-x-4">
             <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-              <Image src="/facebook_logo.png" alt="Facebook" width={24} height={24} />
+              <Image src="/mole/facebook_logo.png" alt="Facebook" width={24} height={24} />
             </a>
             <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-              <Image src="/Instagram_icon.png" alt="Instagram" width={24} height={24} />
+              <Image src="/mole/Instagram_icon.png" alt="Instagram" width={24} height={24} />
             </a>
             <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-              <Image src="/linked-in.jpg" alt="LinkedIn" width={24} height={24} />
+              <Image src="/mole/linked-in.jpg" alt="LinkedIn" width={24} height={24} />
             </a>
           </div>
         </div>
