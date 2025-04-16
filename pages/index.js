@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import 'tailwindcss/tailwind.css';
+// Import motion directly (remove dynamic import to fix unused variable warning)
 import { motion } from 'framer-motion';
 
 export default function Home() {
@@ -18,7 +19,8 @@ export default function Home() {
         const mod = await import('framer-motion');
         setMotionLib(mod);
       } catch (error) {
-        console.warn('Framer Motion failed to load. Animations disabled.');
+        // Use error to suppress the unused variable warning
+        console.warn('Framer Motion failed to load. Animations disabled.', error);
       }
     };
     loadMotion();
@@ -75,7 +77,7 @@ export default function Home() {
         </div>
       </nav>
 
-      <MotionWrapper
+      <motion.div // Use motion directly instead of MotionWrapper
         className="relative h-screen text-[#f5e8c7] bg-cover bg-center bg-fixed hero-parallax"
         style={{ backgroundImage: "url('/moles_collage.jpg')" }}
         initial={{ opacity: 0 }}
@@ -83,7 +85,7 @@ export default function Home() {
         transition={{ duration: 1.2 }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/70 flex flex-col items-center justify-center text-center px-4">
-          <MotionWrapper
+          <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
@@ -96,15 +98,15 @@ export default function Home() {
               className="w-24 sm:w-32 md:w-48 rounded-full border-4 border-[#a8c686] shadow-xl mb-4"
               onError={(e) => { e.target.src = 'https://via.placeholder.com/180?text=Logo'; }}
             />
-          </MotionWrapper>
-          <MotionWrapper
+          </motion.div>
+          <motion.div
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
             <h1 className="text-3xl sm:text-5xl md:text-8xl font-heading tracking-tight">Welsh Mole Catcher</h1>
-          </MotionWrapper>
-          <MotionWrapper
+          </motion.div>
+          <motion.div
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.8 }}
@@ -115,13 +117,13 @@ export default function Home() {
                 Get in Touch
               </a>
             </Link>
-          </MotionWrapper>
+          </motion.div>
         </div>
-      </MotionWrapper>
+      </motion.div>
 
       <section className="py-12 sm:py-20 bg-[#fefbf6]">
         <div className="container mx-auto px-4 sm:px-6">
-          <MotionWrapper
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -131,14 +133,14 @@ export default function Home() {
             <p className="text-base sm:text-lg text-[#4a3b30] font-body max-w-3xl mx-auto text-center leading-relaxed">
               At Welsh Mole Catcher, we bring the charm and grit of rural life to every job. Specializing in traditional mole trapping, we serve farms and countryside homes across South and Mid Wales with a family-run touch. Let us tackle your pest problems with methods as timeless as the rolling hills.
             </p>
-          </MotionWrapper>
+          </motion.div>
         </div>
         <div className="leafy-divider mt-6 sm:mt-10"></div>
       </section>
 
       <section id="services" className="py-12 sm:py-20 bg-[#f0ead6]">
         <div className="container mx-auto px-4 sm:px-6">
-          <MotionWrapper
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -146,7 +148,7 @@ export default function Home() {
           >
             <h2 className="text-3xl sm:text-4xl font-heading text-[#3e2d20] border-b-4 border-[#a8c686] inline-block mb-6 text-center">Our Countryside Services</h2>
             <div className="grid gap-6 sm:gap-8 max-w-3xl mx-auto">
-              <MotionWrapper
+              <motion.div
                 className="bg-[#f9f5e8] p-4 sm:p-6 rounded-2xl shadow-lg border border-[#d4c9a5] hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                 whileHover={{ scale: 1.03 }}
               >
@@ -154,8 +156,8 @@ export default function Home() {
                 <p className="text-base sm:text-lg text-[#4a3b30] font-body leading-relaxed">
                   Using time-honored traps, we provide effective mole control that’s gentle on your land and safe for livestock.
                 </p>
-              </MotionWrapper>
-              <MotionWrapper
+              </motion.div>
+              <motion.div
                 className="bg-[#f9f5e8] p-4 sm:p-6 rounded-2xl shadow-lg border border-[#d4c9a5] hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                 whileHover={{ scale: 1.03 }}
               >
@@ -163,16 +165,16 @@ export default function Home() {
                 <p className="text-base sm:text-lg text-[#4a3b30] font-body leading-relaxed">
                   From rats and mice to wasps, bees, and squirrels, we manage all rural pests with care and expertise.
                 </p>
-              </MotionWrapper>
+              </motion.div>
             </div>
-          </MotionWrapper>
+          </motion.div>
         </div>
         <div className="leafy-divider mt-6 sm:mt-10"></div>
       </section>
 
       <section id="gallery" className="py-12 sm:py-20 bg-[#fefbf6]">
         <div className="container mx-auto px-4 sm:px-6">
-          <MotionWrapper
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -180,7 +182,7 @@ export default function Home() {
           >
             <h2 className="text-3xl sm:text-4xl font-heading text-[#3e2d20] border-b-4 border-[#a8c686] inline-block mb-6 text-center">A Glimpse of Our Work</h2>
             <div className="masonry-grid max-w-3xl mx-auto">
-              <MotionWrapper
+              <motion.div
                 className="masonry-item cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 onClick={() => openModal('/moles_collage.jpg')}
@@ -194,8 +196,8 @@ export default function Home() {
                   onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=Mole+Catch+Highlights'; }}
                 />
                 <figcaption className="text-center py-2 bg-[#d4c9a5] text-[#4a3b30] font-body rounded-b-lg text-sm">Mole Catch Highlights</figcaption>
-              </MotionWrapper>
-              <MotionWrapper
+              </motion.div>
+              <motion.div
                 className="masonry-item cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 onClick={() => openModal('/farm_moles.jpg')}
@@ -209,8 +211,8 @@ export default function Home() {
                   onError={(e) => { e.target.src = 'https://via.placeholder.com/300x250?text=Farm+Results'; }}
                 />
                 <figcaption className="text-center py-2 bg-[#d4c9a5] text-[#4a3b30] font-body rounded-b-lg text-sm">Farm Results</figcaption>
-              </MotionWrapper>
-              <MotionWrapper
+              </motion.div>
+              <motion.div
                 className="masonry-item cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 onClick={() => openModal('/farm_son.jpg')}
@@ -224,8 +226,8 @@ export default function Home() {
                   onError={(e) => { e.target.src = 'https://via.placeholder.com/300x300?text=Family+Team'; }}
                 />
                 <figcaption className="text-center py-2 bg-[#d4c9a5] text-[#4a3b30] font-body rounded-b-lg text-sm">Family Team</figcaption>
-              </MotionWrapper>
-              <MotionWrapper
+              </motion.div>
+              <motion.div
                 className="masonry-item cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 onClick={() => openModal('/farm_john_mole.jpg')}
@@ -239,13 +241,13 @@ export default function Home() {
                   onError={(e) => { e.target.src = 'https://via.placeholder.com/300x200?text=In+The+Field'; }}
                 />
                 <figcaption className="text-center py-2 bg-[#d4c9a5] text-[#4a3b30] font-body rounded-b-lg text-sm">In The Field</figcaption>
-              </MotionWrapper>
+              </motion.div>
             </div>
-          </MotionWrapper>
+          </motion.div>
         </div>
         <div id="modal" className="modal hidden" onClick={closeModal}>
           {modalImage && (
-            <MotionWrapper
+            <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
@@ -264,7 +266,7 @@ export default function Home() {
               >
                 ✕
               </button>
-            </MotionWrapper>
+            </motion.div>
           )}
         </div>
         <div className="leafy-divider mt-6 sm:mt-10"></div>
@@ -272,7 +274,7 @@ export default function Home() {
 
       <section id="contact" className="py-12 sm:py-20 bg-[#f0ead6]">
         <div className="container mx-auto px-4 sm:px-6">
-          <MotionWrapper
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -334,14 +336,14 @@ export default function Home() {
                 )}
               </form>
             </div>
-          </MotionWrapper>
+          </motion.div>
         </div>
         <div className="leafy-divider mt-6 sm:mt-10"></div>
       </section>
 
       <section id="faqs" className="py-12 sm:py-20 bg-[#fefbf6]">
         <div className="container mx-auto px-4 sm:px-6">
-          <MotionWrapper
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -380,7 +382,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-          </MotionWrapper>
+          </motion.div>
         </div>
         <div className="leafy-divider mt-6 sm:mt-10"></div>
       </section>
