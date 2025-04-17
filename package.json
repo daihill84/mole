@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "export": "echo 'Export is now handled by next build with output: export in next.config.js'",
-  "deploy": "gh-pages -d out/mole",
-  "postbuild": "mkdir out\\mole && move out\\*.* out\\mole && move out\\404 out\\mole && move out\\_next out\\mole"
-},
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "export": "echo 'Export is now handled by next build with output: export in next.config.js'",
+    "deploy": "npm run build && rmdir /S /Q out_temp 2>nul || exit 0 && mkdir out_temp && xcopy out\\mole\\* out_temp /E /H /C /I && gh-pages -d out_temp",
+    "postbuild": "mkdir out\\mole && move out\\*.* out\\mole && move out\\404 out\\mole && move out\\_next out\\mole"
+  },
   "dependencies": {
     "framer-motion": "^11.2.10",
     "next": "15.3.0",
