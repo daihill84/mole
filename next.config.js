@@ -1,11 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // Enable static export for GitHub Pages
-  basePath: '/mole', // Match the repository path (daihill84.github.io/mole)
-  assetPrefix: '/mole/', // Ensure assets load correctly
-  trailingSlash: true, // Ensure URLs end with a slash
+  output: 'export',
+  trailingSlash: true,
   images: {
-    unoptimized: true, // Disable image optimization for static export
+    unoptimized: true,
   },
 };
 
