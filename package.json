@@ -7,12 +7,13 @@
     "build": "next build",
     "start": "next start",
     "export": "echo 'Export is now handled by next build with output: export in next.config.js'",
-    "deploy": "npm run build && rmdir /S /Q out_temp 2>nul || exit 0 && mkdir out_temp && xcopy out\\* out_temp /E /H /C /I && gh-pages -d out_temp",
+    "check-deploy": "node check-deployment.js",
+    "deploy": "npm run build && npm run check-deploy",
     "postbuild": "echo 'No additional steps needed after build'"
   },
   "dependencies": {
     "framer-motion": "^11.2.10",
-    "next": "15.3.0",
+    "next": "^14.2.15",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

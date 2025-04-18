@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import Script from 'next/script';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -16,6 +17,8 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const { name, email, message } = formData;
+    window.location.href = `mailto:info@welshmolecatcher.co.uk?subject=Contact Form Submission from ${name}&body=Name: ${name}%0D%0AEmail: ${email}%0D%0AMessage: ${message}`;
     setSubmitStatus('success');
     setFormData({ name: '', email: '', message: '' });
   };
@@ -33,15 +36,53 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#1a2e2e] font-sans antialiased bg-gradient-to-br from-[#f8fafc] to-[#e5e7eb]">
       <Head>
-        <title>Welsh Mole Catcher - Expert Mole Control in Wales</title>
-        <meta name="description" content="Professional mole catching services in Wales. Humane, effective, and affordable solutions for farms, gardens, and properties." />
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple_touch_icon.png" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta property="og:title" content="Welsh Mole Catcher - Expert Mole Control in Wales" />
-        <meta property="og:description" content="Professional mole catching services in Wales. Humane, effective, and affordable solutions." />
-        <meta property="og:image" content="https://daihill84.github.io/mole/farm_john_mole.jpg" />
-      </Head>
+  <title>Welsh Mole Catcher | Expert Mole Control Services Across Wales</title>
+  <meta name="description" content="Expert mole catching services across Wales. Local pest control for farms, gardens, and homes. Fast, humane mole trapping solutions." />
+  <meta name="keywords" content="mole catcher Wales, pest control Wales, mole removal, mole trapping Wales, farm pest control, garden moles, mole man, mole trapping services, mole catcher for farms" />
+  <meta name="geo.region" content="GB-WLS" />
+  <meta name="geo.placename" content="Wales" />
+  <meta name="geo.position" content="52.0189;-3.2332" />
+  <meta name="ICBM" content="52.0189, -3.2332" />
+  <link rel="canonical" href="https://www.welshmolecatcher.co.uk/" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="apple-touch-icon" href="/apple_touch_icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta property="og:title" content="Welsh Mole Catcher | Expert Mole Control Services Across Wales" />
+  <meta property="og:description" content="Fast, humane, and professional mole control for farms, homes, and gardens throughout Wales." />
+  <meta property="og:url" content="https://www.welshmolecatcher.co.uk/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/logo.png" />
+  <meta
+    httpEquiv="Content-Security-Policy"
+    content="
+      default-src 'self';
+      script-src 'self' 'unsafe-eval' https://www.googletagmanager.com;
+      style-src 'self' 'unsafe-inline';
+      img-src 'self' data: https://via.placeholder.com;
+      connect-src 'self' https://www.googletagmanager.com;
+      frame-src 'self' https://www.googletagmanager.com;
+    "
+  />
+  <meta httpEquiv="Cache-Control" content="public, max-age=31536000, immutable" />
+</Head>
+
+      {/* Google Tag Manager */}
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtm.js?id=GTM-PBCN4VDL"
+        onLoad={() => {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        }}
+      />
+      <noscript>
+        <iframe
+          src="https://www.googletagmanager.com/ns.html?id=GTM-PBCN4VDL"
+          height="0"
+          width="0"
+          style={{ display: 'none', visibility: 'hidden' }}
+        ></iframe>
+      </noscript>
 
       {/* Header with Navigation */}
       <header className="bg-gradient-to-r from-[#1a3c34] to-[#2e5b52] text-[#f5e9c4] p-6 sticky top-0 z-50 shadow-xl">
@@ -53,6 +94,7 @@ export default function Home() {
           <button
             className="md:hidden focus:outline-none p-2 rounded-md hover:bg-[#2e5b52]/50 transition-colors"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'} />
@@ -102,8 +144,8 @@ export default function Home() {
               className="md:w-1/2"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
             >
               <Image
                 src="/farm_john_mole.jpg"
@@ -118,8 +160,8 @@ export default function Home() {
               className="md:w-1/2"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
             >
               <p className="text-lg mb-6 leading-relaxed text-[#4a4a4a]">
                 With over 20 years of experience, Welsh Mole Catcher provides professional mole control services across Wales. We specialize in humane trapping methods, ensuring minimal disruption to your land while effectively managing mole populations.
@@ -148,8 +190,8 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                viewport={{ once: true }}
               >
                 <h3 className="text-2xl font-semibold mb-4 text-[#1a3c34]">{service.title}</h3>
                 <Image
@@ -181,10 +223,10 @@ export default function Home() {
                 className="bg-[#f1f4f5] p-8 rounded-2xl shadow-lg border border-[#e0e0e0] hover:shadow-xl transition-all duration-300"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
-                viewport={{ once: true }}
               >
-                <p className="text-lg italic text-[#4a4a4a] mb-4">&quot;{testimonial.quote}&quot;</p>
+                <p className="text-lg italic text-[#4a4a4a] mb-4">{testimonial.quote}</p>
                 <p className="text-[#1a3c34] font-semibold">{testimonial.name}</p>
               </motion.div>
             ))}
@@ -211,8 +253,8 @@ export default function Home() {
                 className="cursor-pointer"
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
               >
                 <Image
                   src={img.src}
@@ -243,6 +285,7 @@ export default function Home() {
             <button
               onClick={closeModal}
               className="absolute top-4 right-4 text-white text-4xl font-bold focus:outline-none hover:text-[#f5e9c4] transition-colors duration-300"
+              aria-label="Close modal"
             >
               ×
             </button>
@@ -254,14 +297,37 @@ export default function Home() {
       <section id="area" className="py-20 bg-[#f1f4f5]">
         <div className="container mx-auto px-6 max-w-5xl">
           <h2 className="text-4xl font-bold text-center mb-12 text-[#1a3c34] tracking-tight">Our Service Area</h2>
-          <Image
-            src="/area.png"
-            alt="Service area map"
-            width={600}
-            height={400}
-            className="w-full max-w-3xl mx-auto object-cover rounded-2xl shadow-lg border-2 border-[#f5e9c4] hover:scale-105 transition-transform duration-300"
-            onError={(e) => { e.target.src = 'https://via.placeholder.com/600x400?text=Service+Area+Map'; }}
-          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Image
+              src="/area.png"
+              alt="Service area map"
+              width={600}
+              height={400}
+              className="w-full max-w-3xl mx-auto object-cover rounded-2xl shadow-lg border-2 border-[#f5e9c4] hover:scale-105 transition-transform duration-300"
+              onError={(e) => { e.target.src = 'https://via.placeholder.com/600x400?text=Service+Area+Map'; }}
+            />
+          </motion.div>
+          <div className="mt-8 text-center">
+            <h3 className="text-2xl font-semibold text-[#1a3c34] mb-4">Other Areas Covered</h3>
+            <ul className="flex flex-wrap justify-center gap-4">
+              {[
+                { name: "Talgarth Mole Catcher", href: "https://talgarth.welshtownandcountry.co.uk" },
+                { name: "Brecon Mole Catcher", href: "https://brecon.welshtownandcountry.co.uk" },
+                { name: "Neath Mole Catcher", href: "https://neath.welshtownandcountry.co.uk" },
+              ].map((area, index) => (
+                <li key={index}>
+                  <a href={area.href} className="text-lg text-[#1a3c34] hover:underline underline-offset-4">
+                    {area.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -274,8 +340,8 @@ export default function Home() {
             className="bg-white text-[#1a2e2e] p-8 rounded-2xl shadow-xl"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
           >
             <div className="mb-6">
               <label htmlFor="name" className="block text-lg mb-2 font-medium">Name</label>
@@ -325,12 +391,20 @@ export default function Home() {
               </p>
             )}
           </motion.form>
+          <div className="mt-8 text-center">
+            <p className="text-lg">
+              Or call us directly at: <a href="tel:07375303124" className="underline hover:text-[#ffffff]">07375 303124</a>
+            </p>
+            <p className="text-lg mt-2">
+              Email: <a href="mailto:info@welshmolecatcher.co.uk" className="underline hover:text-[#ffffff]">info@welshmolecatcher.co.uk</a>
+            </p>
+          </div>
         </div>
       </section>
 
       {/* Floating CTA Banner */}
       <div className="fixed bottom-6 right-6 z-50">
-        <Link href="#contact" className="flex items-center bg-[#f5e9c4] text-[#1a3c34] px-6 py-3 rounded-full shadow-lg hover:bg-[#ffffff] hover:scale-105 transition-all duration-300">
+        <Link href="#contact" className="flex items-center bg-[#f5e9c4] text-[#1a3c34] px-6 py-3 rounded-full shadow-lg hover:bg-[#ffffff] hover:scale-105 transition-all duration-300" aria-label="Contact us for help">
           <span className="font-semibold text-lg mr-2">Need Help Now?</span>
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -342,10 +416,14 @@ export default function Home() {
       <footer className="bg-[#1a3c34] text-[#f5e9c4] py-12">
         <div className="container mx-auto px-6 max-w-5xl text-center">
           <p className="text-lg mb-4">© {new Date().getFullYear()} Welsh Mole Catcher. All rights reserved.</p>
+          <p className="text-lg mb-4">
+            <Link href="/privacy-policy/" className="hover:underline underline-offset-4">Privacy Policy</Link> |{' '}
+            <Link href="/terms-conditions/" className="hover:underline underline-offset-4">Terms & Conditions</Link>
+          </p>
           <div className="flex justify-center space-x-6">
             {[
-              { href: "https://www.facebook.com", src: "/facebook_logo.png", alt: "Facebook" },
-              { href: "https://www.instagram.com", src: "/Instagram_icon.png", alt: "Instagram" },
+              { href: "https://www.facebook.com/profile.php?id=61564861332160", src: "/facebook_logo.png", alt: "Facebook" },
+              { href: "https://www.instagram.com/welshtownandcountry.co.uk/", src: "/Instagram_icon.png", alt: "Instagram" },
               { href: "https://www.linkedin.com", src: "/linked-in.jpg", alt: "LinkedIn" },
             ].map((social, index) => (
               <a key={index} href={social.href} target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform duration-300">
@@ -355,6 +433,40 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            "name": "Welsh Mole Catcher",
+            "image": "https://www.welshmolecatcher.co.uk/logo.png",
+            "telephone": "07375 303124",
+            "email": "info@welshmolecatcher.co.uk",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Wales",
+              "addressRegion": "Wales",
+              "postalCode": "LD3",
+              "streetAddress": "11 Glynneath Road"
+            },
+            "url": "https://www.welshmolecatcher.co.uk/",
+            "sameAs": [
+              "https://www.facebook.com/profile.php?id=61564861332160",
+              "https://www.instagram.com/welshtownandcountry.co.uk/"
+            ],
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 52.0189,
+              "longitude": -3.2332
+            },
+            "openingHours": "Mo-Su 24/7",
+            "description": "Humane and effective mole catching services for homes and farms across Wales. Local pest control expert for moles, rats, mice, and more."
+          })
+        }}
+      />
     </div>
   );
 }
