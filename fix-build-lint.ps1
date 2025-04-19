@@ -1,14 +1,14 @@
-# fix-build-lint.ps1
+# fix-all-issues.ps1
 
 # Ensure we're in the correct directory
 Set-Location -Path "C:\Users\daihi\welsh-mole-catcher"
 
-# Step 1: Stop any running Node.js processes to resolve EPERM issue
+# Step 1: Stop any running Node.js processes
 Write-Host "Stopping any running Node.js processes..."
 Stop-Process -Name "node" -Force -ErrorAction SilentlyContinue
 Write-Host "Node.js processes stopped."
 
-# Step 2: Fix encoding issue in pages/index.js by rewriting it with UTF-8 encoding
+# Step 2: Fix syntax error in pages/index.js
 $indexJsContent = @"
 import Head from 'next/head';
 import Link from 'next/link';
@@ -34,11 +34,7 @@ export default function Home() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, message } = formData;
-    const mailtoLink = `mailto:info@welshmolecatcher.co.uk?subject=Contact Form Submission from ${encodeURIComponent(
-      name
-    )}&body=Name: ${encodeURIComponent(name)}%0D%0AEmail: ${encodeURIComponent(
-      email
-    )}%0D%0AMessage: ${encodeURIComponent(message)}`;
+    const mailtoLink = `mailto:info@welshmolecatcher.co.uk?subject=Contact Form Submission from ${encodeURIComponent(name)}&body=Name: ${encodeURIComponent(name)}%0D%0AEmail: ${encodeURIComponent(email)}%0D%0AMessage: ${encodeURIComponent(message)}`;
     window.location.href = mailtoLink;
     setSubmitStatus('success');
     setFormData({ name: '', email: '', message: '' });
@@ -717,17 +713,98 @@ export default function Home() {
   );
 }
 "@
-# Write the file with UTF-8 encoding
 [System.IO.File]::WriteAllText("C:\Users\daihi\welsh-mole-catcher\pages\index.js", $indexJsContent, [System.Text.Encoding]::UTF8)
 git add pages/index.js
-Write-Host "Fixed encoding issue in pages/index.js by rewriting with UTF-8 encoding."
+Write-Host "Fixed syntax error in pages/index.js."
 
-# Step 3: Install eslint-plugin-tailwindcss
-Write-Host "Installing eslint-plugin-tailwindcss..."
-npm install -D eslint-plugin-tailwindcss
-Write-Host "eslint-plugin-tailwindcss installed."
+# Step 3: Fix CSS error in styles/globals.css
+$globalsCssContent = @"
+@import 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap';
 
-# Step 4: Update package.json with the new dependency
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+"@
+Set-Content -Path "styles/globals.css" -Value $globalsCssContent
+git add styles/globals.css
+Write-Host "Fixed CSS error in styles/globals.css by moving @import before @tailwind directives."
+
+# Step 4: Update eslint.config.mjs
+$eslintConfigContent = @"
+import globals from 'globals';
+import nextPlugin from 'eslint-config-next';
+import tailwindPlugin from 'eslint-plugin-tailwindcss';
+
+export default [
+  // Apply Next.js recommended config
+  ...nextPlugin.configs['recommended'].flat,
+  // Apply Tailwind CSS recommended config
+  ...tailwindPlugin.configs.recommended,
+  // Define global settings
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
+    },
+  },
+  // Custom rules for .js and .jsx files
+  {
+    files: ['**/*.js', '**/*.jsx'],
+    rules: {
+      'no-unused-vars': 'warn',
+      'react/react-in-jsx-scope': 'off',
+      'tailwindcss/classnames-order': 'warn',
+    },
+  },
+];
+"@
+Set-Content -Path "eslint.config.mjs" -Value $eslintConfigContent
+git add eslint.config.mjs
+Write-Host "Updated eslint.config.mjs with corrected configuration."
+
+# Step 5: Remove tsconfig.json to avoid TypeScript warning
+if (Test-Path "tsconfig.json") {
+  Remove-Item "tsconfig.json"
+  git add tsconfig.json
+  Write-Host "Removed tsconfig.json to avoid TypeScript warning."
+}
+
+# Step 6: Uninstall @rushstack/eslint-patch and update package.json
+Write-Host "Uninstalling @rushstack/eslint-patch..."
+npm uninstall @rushstack/eslint-patch
+
 $packageJsonContent = @"
 {
   "name": "welsh-mole-catcher",
@@ -747,6 +824,8 @@ $packageJsonContent = @"
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.2.79",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
@@ -757,40 +836,37 @@ $packageJsonContent = @"
 }
 "@
 Set-Content -Path "package.json" -Value $packageJsonContent
-Write-Host "Updated package.json with eslint-plugin-tailwindcss."
+Write-Host "Updated package.json by removing @rushstack/eslint-patch."
 
-# Step 5: Fix npm vulnerabilities and regenerate package-lock.json
-Write-Host "Fixing npm vulnerabilities..."
-npm audit fix --force
-Write-Host "NPM vulnerabilities fixed."
+# Step 7: Regenerate package-lock.json and install dependencies
 Write-Host "Regenerating package-lock.json and installing dependencies..."
 npm install
 git add package.json
 git add package-lock.json
 Write-Host "Staged package.json and package-lock.json."
 
-# Step 6: Run linting
+# Step 8: Run linting
 Write-Host "Running linting..."
 npm run lint
 Write-Host "Running lint fix..."
 npm run lint:fix
 Write-Host "Linting completed."
 
-# Step 7: Build the project
+# Step 9: Build the project
 Write-Host "Building the project..."
 npm run build
 Write-Host "Build completed."
 
-# Step 8: Test the project locally
+# Step 10: Test the project locally
 Write-Host "Starting the development server..."
 Start-Process -FilePath "powershell" -ArgumentList "-Command", "npm run dev"
 Write-Host "Opening http://localhost:3000 in your browser..."
 Start-Process "http://localhost:3000"
 
-# Step 9: Commit and push changes
+# Step 11: Commit and push changes
 Write-Host "Committing changes..."
 git add .
-git commit -m "Fix encoding in pages/index.js, install eslint-plugin-tailwindcss, resolve npm vulnerabilities"
+git commit -m "Fix syntax errors in pages/index.js and styles/globals.css, update eslint.config.mjs, remove tsconfig.json and @rushstack/eslint-patch"
 Write-Host "Pushing changes to origin/main..."
 git push origin main
 Write-Host "Changes pushed to https://github.com/daihill84/mole."
