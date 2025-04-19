@@ -1,5 +1,5 @@
-import '../styles/globals.css';
+import '../styles/globals.css'; // Adjust the path if your CSS file is elsewhere
 
-export default function App({ Component, pageProps }) {
+export default function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
