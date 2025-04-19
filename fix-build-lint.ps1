@@ -1,4 +1,16 @@
-﻿import Head from 'next/head';
+# fix-build-lint.ps1
+
+# Ensure we're in the correct directory
+Set-Location -Path "C:\Users\daihi\welsh-mole-catcher"
+
+# Step 1: Stop any running Node.js processes to resolve EPERM issue
+Write-Host "Stopping any running Node.js processes..."
+Stop-Process -Name "node" -Force -ErrorAction SilentlyContinue
+Write-Host "Node.js processes stopped."
+
+# Step 2: Fix encoding issue in pages/index.js by rewriting it with UTF-8 encoding
+$indexJsContent = @"
+import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import Script from 'next/script';
@@ -22,7 +34,11 @@ export default function Home() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, message } = formData;
-    const mailtoLink = mailto:info@welshmolecatcher.co.uk?subject=Contact Form Submission from &body=Name: %0D%0AEmail: %0D%0AMessage: ;
+    const mailtoLink = `mailto:info@welshmolecatcher.co.uk?subject=Contact Form Submission from ${encodeURIComponent(
+      name
+    )}&body=Name: ${encodeURIComponent(name)}%0D%0AEmail: ${encodeURIComponent(
+      email
+    )}%0D%0AMessage: ${encodeURIComponent(message)}`;
     window.location.href = mailtoLink;
     setSubmitStatus('success');
     setFormData({ name: '', email: '', message: '' });
@@ -147,13 +163,15 @@ export default function Home() {
             </svg>
           </button>
           <ul
-            className={md:flex space-x-8  md:block absolute md:static top-16 left-0 right-0 bg-green-800 md:bg-transparent p-6 md:p-0 z-40 rounded-b-xl shadow-lg md:shadow-none}
+            className={`md:flex space-x-8 ${
+              isMenuOpen ? 'block' : 'hidden'
+            } md:block absolute md:static top-16 left-0 right-0 bg-green-800 md:bg-transparent p-6 md:p-0 z-40 rounded-b-xl shadow-lg md:shadow-none`}
           >
             {['About', 'Services', 'Testimonials', 'Gallery', 'Area', 'Contact'].map(
               (item) => (
                 <li key={item}>
                   <Link
-                    href={#}
+                    href={`#${item.toLowerCase()}`}
                     className="text-lg font-medium hover:text-amber-100 transition-colors duration-300 hover:underline underline-offset-4 font-body"
                   >
                     {item}
@@ -294,7 +312,10 @@ export default function Home() {
                   height={200}
                   className="w-full h-48 object-cover rounded-lg mb-4 border border-amber-50 hover:scale-105 transition-transform duration-300"
                   onError={(e) => {
-                    e.target.src = https://via.placeholder.com/300x200?text=;
+                    e.target.src = `https://via.placeholder.com/300x200?text=${service.title.replace(
+                      /\s/g,
+                      '+'
+                    )}`;
                   }}
                 />
                 <p className="text-gray-700 text-base leading-relaxed font-body">
@@ -334,7 +355,7 @@ export default function Home() {
                 transition={{ duration: 0.5, delay: index * 0.2 }}
               >
                 <p className="text-lg italic text-gray-700 mb-4 font-body">
-                  â€œ{testimonial.quote}â€
+                  “{testimonial.quote}”
                 </p>
                 <p className="text-green-800 font-semibold font-body">
                   {testimonial.name}
@@ -377,7 +398,10 @@ export default function Home() {
                   className="w-full h-56 object-cover rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 border border-amber-50"
                   onClick={() => openModal(img.src)}
                   onError={(e) => {
-                    e.target.src = https://via.placeholder.com/300x200?text=;
+                    e.target.src = `https://via.placeholder.com/300x200?text=${img.alt.replace(
+                      /\s/g,
+                      '+'
+                    )}`;
                   }}
                 />
               </motion.div>
@@ -405,7 +429,7 @@ export default function Home() {
               className="absolute top-4 right-4 text-white text-4xl font-bold hover:text-amber-50 transition-colors duration-300"
               aria-label="Close modal"
             >
-              Ã—
+              ×
             </button>
           </div>
         </div>
@@ -544,7 +568,7 @@ export default function Home() {
             </button>
             {submitStatus === 'success' && (
               <p className="mt-6 text-center text-lg text-green-800 font-medium font-body">
-                Thank you! Weâ€™ll get back to you soon.
+                Thank you! We’ll get back to you soon.
               </p>
             )}
           </motion.form>
@@ -600,7 +624,7 @@ export default function Home() {
       <footer className="bg-green-800 text-amber-50 py-12">
         <div className="container mx-auto px-6 max-w-5xl text-center">
           <p className="text-lg mb-4 font-body">
-            Â© {new Date().getFullYear()} Welsh Mole Catcher. All rights reserved.
+            © {new Date().getFullYear()} Welsh Mole Catcher. All rights reserved.
           </p>
           <p className="text-lg mb-4 font-body">
             <Link
@@ -692,3 +716,83 @@ export default function Home() {
     </div>
   );
 }
+"@
+# Write the file with UTF-8 encoding
+[System.IO.File]::WriteAllText("C:\Users\daihi\welsh-mole-catcher\pages\index.js", $indexJsContent, [System.Text.Encoding]::UTF8)
+git add pages/index.js
+Write-Host "Fixed encoding issue in pages/index.js by rewriting with UTF-8 encoding."
+
+# Step 3: Install eslint-plugin-tailwindcss
+Write-Host "Installing eslint-plugin-tailwindcss..."
+npm install -D eslint-plugin-tailwindcss
+Write-Host "eslint-plugin-tailwindcss installed."
+
+# Step 4: Update package.json with the new dependency
+$packageJsonContent = @"
+{
+  "name": "welsh-mole-catcher",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "framer-motion": "^11.0.0",
+    "next": "14.2.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.3",
+    "eslint-plugin-tailwindcss": "^3.17.4",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3"
+  }
+}
+"@
+Set-Content -Path "package.json" -Value $packageJsonContent
+Write-Host "Updated package.json with eslint-plugin-tailwindcss."
+
+# Step 5: Fix npm vulnerabilities and regenerate package-lock.json
+Write-Host "Fixing npm vulnerabilities..."
+npm audit fix --force
+Write-Host "NPM vulnerabilities fixed."
+Write-Host "Regenerating package-lock.json and installing dependencies..."
+npm install
+git add package.json
+git add package-lock.json
+Write-Host "Staged package.json and package-lock.json."
+
+# Step 6: Run linting
+Write-Host "Running linting..."
+npm run lint
+Write-Host "Running lint fix..."
+npm run lint:fix
+Write-Host "Linting completed."
+
+# Step 7: Build the project
+Write-Host "Building the project..."
+npm run build
+Write-Host "Build completed."
+
+# Step 8: Test the project locally
+Write-Host "Starting the development server..."
+Start-Process -FilePath "powershell" -ArgumentList "-Command", "npm run dev"
+Write-Host "Opening http://localhost:3000 in your browser..."
+Start-Process "http://localhost:3000"
+
+# Step 9: Commit and push changes
+Write-Host "Committing changes..."
+git add .
+git commit -m "Fix encoding in pages/index.js, install eslint-plugin-tailwindcss, resolve npm vulnerabilities"
+Write-Host "Pushing changes to origin/main..."
+git push origin main
+Write-Host "Changes pushed to https://github.com/daihill84/mole."
+
+Write-Host "Script completed! Check http://localhost:3000 and the browser console for any errors."
